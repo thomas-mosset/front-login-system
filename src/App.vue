@@ -1,0 +1,36 @@
+<template>
+  <div
+    id="nav"
+    class=
+      "
+        bg-gray-800
+        font-semibold
+        flex
+        justify-end
+        mb-8
+        text-lg
+      "
+  >
+    <router-link to="/" class="router-link text-gray-200 m-4">Sign in</router-link>
+    <router-link to="/login" class="router-link text-gray-200 m-4">Login</router-link>
+  </div>
+  <router-view/>
+</template>
+
+<style>
+#app {
+  font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Glory', sans-serif;
+}
+
+.router-link {
+  font-family: 'Glory', sans-serif;
+}
+
+#nav a.router-link-exact-active {
+  color: #EF4444;
+}
+</style>
