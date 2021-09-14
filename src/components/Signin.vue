@@ -21,6 +21,7 @@
         border-red-500
         w-3/4
         my-0
+        mb-8
         mx-auto
         py-4
       "
@@ -224,11 +225,14 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'Signin',
   data() {
     return {
       formValues: {
+        id: '',
         email: '',
         username: '',
         password: '',
@@ -242,23 +246,42 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['createUser']),
+    randomNb() {
+      this.formValues.id = Math.random() * 100;
+    },
     submitFormValues(event) {
       event.preventDefault();
 
+      // Check email errors
       if (this.formValues.email === '') {
         this.errorMessageArray.errorMessageEmail = 'You need to enter an email address.';
+      } else if (!this.formValues.email.includes('@')) {
+        this.errorMessageArray.errorMessageEmail = 'You need to enter a valid email address.';
       }
 
+      // Check username errors
       if (this.formValues.username === '') {
         this.errorMessageArray.errorMessageUsername = 'You need to enter a username.';
       }
 
+      // Check password errors
       if (this.formValues.password === '') {
         this.errorMessageArray.errorMessagePassword = 'You need to enter a password.';
+      } else if (this.formValues.password.length < 6) {
+        this.errorMessageArray.errorMessagePassword = 'Password must be at least 6 characters.';
       }
 
-      console.log('Values', this.formValues);
+      // For id (randomize an id nb)
+      this.randomNb();
+
+      // Add user's infos to vueX
+      this.createUser(this.formValues);
+
+      // Redirect to the login page
+      this.$router.push('login');
     },
+    // Toggle pwd state to show or hide the pwd to the client
     togglePwd() {
       const passwordField = document.getElementById('password');
 
