@@ -12,10 +12,42 @@
       "
   >
     <router-link to="/" class="router-link text-gray-200 m-4">Sign in</router-link>
-    <router-link to="/login" class="router-link text-gray-200 m-4">Login</router-link>
+    <router-link
+      to="/profil" class="router-link text-gray-200 m-4"
+      v-if="$store.state.loggedIn === true"
+    >
+      My profil
+    </router-link>
+    <router-link
+      to="/login" class="router-link text-gray-200 m-4"
+      v-if="$store.state.loggedIn === false"
+    >
+      Login
+    </router-link>
+    <router-link
+      to="/login" class="router-link text-gray-200 m-4"
+      v-else
+      @click="logout"
+    >
+      Logout
+    </router-link>
   </div>
   <router-view/>
 </template>
+
+<script>
+import { mapMutations } from 'vuex';
+
+export default {
+  name: 'App',
+  methods: {
+    ...mapMutations(['logOutUser']),
+    logout() {
+      this.logOutUser();
+    },
+  },
+};
+</script>
 
 <style>
 #app {

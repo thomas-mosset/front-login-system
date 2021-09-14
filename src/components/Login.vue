@@ -177,61 +177,70 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Signin',
   data() {
     return {
       formValues: {
-        id: '',
-        email: '',
         username: '',
         password: '',
       },
       errorMessageArray: {
-        errorMessageEmail: '',
         errorMessageUsername: '',
         errorMessagePassword: '',
       },
       pwdState: false,
     };
   },
+  computed: {
+    ...mapState(['user']),
+  },
   methods: {
-    ...mapMutations(['createUser']),
-    randomNb() {
-      this.formValues.id = Math.random() * 100;
-    },
+    ...mapMutations(['loginUser']),
     submitFormValues(event) {
       event.preventDefault();
 
-      // Check email errors
-      if (this.formValues.email === '') {
-        this.errorMessageArray.errorMessageEmail = 'You need to enter an email address.';
-      } else if (!this.formValues.email.includes('@')) {
-        this.errorMessageArray.errorMessageEmail = 'You need to enter a valid email address.';
+      this.clearErrorMessage();
+
+      console.log(this.$store.state.user);
+
+      let submitOk = false;
+
+      if (submitOk === false) {
+        // Check username errors
+        if (this.formValues.username === '') {
+          this.errorMessageArray.errorMessageUsername = 'You need to enter a username.';
+        } else if (this.formValues.username !== this.$store.state.user.username) {
+          this.errorMessageArray.errorMessageUsername = 'The given username doesn\'t match any registered username.';
+        }
+
+        // Check password errors
+        if (this.formValues.password === '') {
+          this.errorMessageArray.errorMessagePassword = 'You need to enter a password.';
+        }
+
+        if (
+          this.formValues.username === this.$store.state.user.username
+          && this.formValues.password !== this.$store.state.user.password
+        ) {
+          this.errorMessageArray.errorMessagePassword = 'Password incorrect.';
+        }
+
+        if (
+          this.errorMessageArray.errorMessageUsername === '' && this.errorMessageArray.errorMessagePassword === '' && this.formValues.username === this.$store.state.user.username && this.formValues.password === this.$store.state.user.password
+        ) {
+          submitOk = true;
+
+          console.log('Login ok', submitOk);
+
+          this.loginUser();
+
+          // Redirect to the login page
+          this.$router.push('profil');
+        }
       }
-
-      // Check username errors
-      if (this.formValues.username === '') {
-        this.errorMessageArray.errorMessageUsername = 'You need to enter a username.';
-      }
-
-      // Check password errors
-      if (this.formValues.password === '') {
-        this.errorMessageArray.errorMessagePassword = 'You need to enter a password.';
-      } else if (this.formValues.password.length < 6) {
-        this.errorMessageArray.errorMessagePassword = 'Password must be at least 6 characters.';
-      }
-
-      // For id (randomize an id nb)
-      this.randomNb();
-
-      // Add user's infos to vueX
-      this.createUser(this.formValues);
-
-      // Redirect to the login page
-      this.$router.push('login');
     },
     // Toggle pwd state to show or hide the pwd to the client
     togglePwd() {
@@ -244,6 +253,12 @@ export default {
       } else {
         passwordField.type = 'password';
       }
+    },
+    clearErrorMessage() {
+      this.errorMessageArray.errorMessageEmail = '';
+      this.errorMessageArray.errorMessageUsername = '';
+      this.errorMessageArray.errorMessagePassword = '';
+      this.errorMessageArray.errorMessageConfirmedPassword = '';
     },
   },
 };
