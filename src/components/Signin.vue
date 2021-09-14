@@ -207,6 +207,91 @@
           {{ errorMessageArray.errorMessagePassword }}
         </p>
       </fieldset>
+      <fieldset
+        class=
+        "
+            flex
+            w-full
+            p-4
+        "
+      >
+        <label
+          for="password"
+          class=
+          "
+              text-gray-200
+              font-semibold
+              bg-red-500
+              py-4
+              my-8
+              text-center
+          "
+        >
+          Confirm your password :
+        </label>
+        <div
+          class=
+          "
+            my-0
+            mx-auto
+            sm:w-2/5
+          "
+        >
+          <input
+            type="password"
+            class=
+            "
+              border-2
+              border-gray-800
+              focus:border-red-500
+              my-0
+              mx-auto
+              sm:w-4/5
+              md:w-3/4
+            "
+            id="confirmedPassword"
+            placeholder="Ex: xyz"
+            v-model="formValues.confirmedPassword"
+          >
+          <span
+            v-if="confPwdState === false"
+            @click="toggleConfPwd"
+            class=
+            "
+              bg-red-500
+              px-3
+              py-2
+              ml-1
+            "
+          >
+            Show
+          </span>
+          <span
+            v-else
+            @click="toggleConfPwd"
+            class=
+            "
+              bg-red-500
+              px-3
+              py-2
+              ml-1
+            "
+          >
+            Hide
+          </span>
+        </div>
+
+        <p
+          class=
+          "
+            text-center
+            text-red-700
+            mt-2
+          "
+        >
+          {{ errorMessageArray.errorMessageConfirmedPassword }}
+        </p>
+      </fieldset>
       <button
         type="submit"
         class=
@@ -236,13 +321,16 @@ export default {
         email: '',
         username: '',
         password: '',
+        confirmedPassword: '',
       },
       errorMessageArray: {
         errorMessageEmail: '',
         errorMessageUsername: '',
         errorMessagePassword: '',
+        errorMessageConfirmedPassword: '',
       },
       pwdState: false,
+      confPwdState: false,
     };
   },
   methods: {
@@ -253,33 +341,54 @@ export default {
     submitFormValues(event) {
       event.preventDefault();
 
-      // Check email errors
-      if (this.formValues.email === '') {
-        this.errorMessageArray.errorMessageEmail = 'You need to enter an email address.';
-      } else if (!this.formValues.email.includes('@')) {
-        this.errorMessageArray.errorMessageEmail = 'You need to enter a valid email address.';
+      this.clearErrorMessage();
+
+      let submitOk = false;
+
+      if (submitOk === false) {
+        // Check email errors
+        if (this.formValues.email === '') {
+          this.errorMessageArray.errorMessageEmail = 'You need to enter an email address.';
+        } else if (!this.formValues.email.includes('@')) {
+          this.errorMessageArray.errorMessageEmail = 'You need to enter a valid email address.';
+        }
+
+        // Check username errors
+        if (this.formValues.username === '') {
+          this.errorMessageArray.errorMessageUsername = 'You need to enter a username.';
+        }
+
+        // Check password errors
+        if (this.formValues.password === '') {
+          this.errorMessageArray.errorMessagePassword = 'You need to enter a password.';
+        } else if (this.formValues.password.length < 6) {
+          this.errorMessageArray.errorMessagePassword = 'Password must be at least 6 characters.';
+        }
+
+        // Check password errors
+        if (this.formValues.password !== this.formValues.confirmedPassword) {
+          this.errorMessageArray.errorMessageConfirmedPassword = 'Passwords don\'t match.';
+        }
+
+        console.log('submitOk === false', submitOk);
+
+        if (
+          this.errorMessageArray.errorMessageEmail === '' && this.errorMessageArray.errorMessageUsername === '' && this.errorMessageArray.errorMessagePassword === '' && this.errorMessageArray.errorMessageConfirmedPassword === ''
+        ) {
+          // For id (randomize an id nb)
+          this.randomNb();
+
+          // Add user's infos to vueX
+          this.createUser(this.formValues);
+
+          submitOk = true;
+
+          console.log('error message empty', submitOk);
+
+          // Redirect to the login page
+          this.$router.push('login');
+        }
       }
-
-      // Check username errors
-      if (this.formValues.username === '') {
-        this.errorMessageArray.errorMessageUsername = 'You need to enter a username.';
-      }
-
-      // Check password errors
-      if (this.formValues.password === '') {
-        this.errorMessageArray.errorMessagePassword = 'You need to enter a password.';
-      } else if (this.formValues.password.length < 6) {
-        this.errorMessageArray.errorMessagePassword = 'Password must be at least 6 characters.';
-      }
-
-      // For id (randomize an id nb)
-      this.randomNb();
-
-      // Add user's infos to vueX
-      this.createUser(this.formValues);
-
-      // Redirect to the login page
-      this.$router.push('login');
     },
     // Toggle pwd state to show or hide the pwd to the client
     togglePwd() {
@@ -292,6 +401,23 @@ export default {
       } else {
         passwordField.type = 'password';
       }
+    },
+    toggleConfPwd() {
+      const passwordField = document.getElementById('confirmedPassword');
+
+      this.confPwdState = !this.confPwdState;
+
+      if (this.confPwdState === true) {
+        passwordField.type = 'text';
+      } else {
+        passwordField.type = 'password';
+      }
+    },
+    clearErrorMessage() {
+      this.errorMessageArray.errorMessageEmail = '';
+      this.errorMessageArray.errorMessageUsername = '';
+      this.errorMessageArray.errorMessagePassword = '';
+      this.errorMessageArray.errorMessageConfirmedPassword = '';
     },
   },
 };
