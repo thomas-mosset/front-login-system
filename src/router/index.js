@@ -20,6 +20,11 @@ const routes = [
     name: 'ProfilView',
     component: () => import(/* webpackChunkName: "profil" */ '../views/ProfilView.vue'),
   },
+  {
+    path: '/profil/edit',
+    name: 'EditProfilView',
+    component: () => import(/* webpackChunkName: "edit profil" */ '../views/EditProfilView.vue'),
+  },
 ];
 
 const router = createRouter({

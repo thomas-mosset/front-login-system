@@ -36,6 +36,21 @@
           {{ user.email }}
         </p>
       </div>
+      <router-link to="/profil/edit">
+        <button
+          type="submit"
+          class=
+          "
+            bg-gray-800
+            hover:bg-red-500
+            px-4
+            py-2
+            my-4
+            mx-auto
+            text-gray-200
+          "
+        >Edit my infos</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -47,6 +62,13 @@ export default {
   name: 'Profil',
   computed: {
     ...mapState(['user']),
+  },
+  beforeCreate() {
+    // If !loggedIn then redirection to login page
+    if (this.$store.state.loggedIn === false) {
+      this.$router.push('/login');
+      console.log('create()', this.$store.state.loggedIn);
+    }
   },
 };
 </script>

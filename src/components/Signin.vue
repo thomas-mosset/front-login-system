@@ -20,6 +20,10 @@
         border-2
         border-red-500
         w-3/4
+        md:w-4/5
+        lg:w-3/4
+        xl:w-2/4
+        2xl:w-2/4
         my-0
         mb-8
         mx-auto
@@ -177,6 +181,9 @@
               px-3
               py-2
               ml-1
+              cursor-pointer
+              hover:bg-gray-800
+              hover:text-gray-200
             "
           >
             Show
@@ -190,6 +197,9 @@
               px-3
               py-2
               ml-1
+              cursor-pointer
+              hover:bg-gray-800
+              hover:text-gray-200
             "
           >
             Hide

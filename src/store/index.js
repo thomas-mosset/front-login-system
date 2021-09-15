@@ -20,7 +20,13 @@ export default createStore({
       state.user.username = userinfos.username;
       state.user.password = userinfos.password;
 
-      console.log('state', state.user);
+      // console.log('state', state.user);
+    },
+    updateUser(state, userinfos) {
+      console.log('state', state.user, userinfos);
+
+      state.user.email = userinfos.email;
+      state.user.username = userinfos.username;
     },
     loginUser(state, userinfos) {
       console.log(state, userinfos);
