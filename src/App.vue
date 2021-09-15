@@ -11,21 +11,32 @@
         text-lg
       "
   >
-    <router-link to="/" class="router-link text-gray-200 m-4">Sign in</router-link>
     <router-link
-      to="/profil" class="router-link text-gray-200 m-4"
+      to="/"
+      class=
+      "
+        router-link
+        text-gray-200
+        m-4
+        cursor-pointer
+      "
+    >
+      Sign in
+    </router-link>
+    <router-link
+      to="/profil" class="router-link text-gray-200 m-4 cursor-pointer"
       v-if="$store.state.loggedIn === true"
     >
       My profil
     </router-link>
     <router-link
-      to="/login" class="router-link text-gray-200 m-4"
+      to="/login" class="router-link text-gray-200 m-4 cursor-pointer"
       v-if="$store.state.loggedIn === false"
     >
       Login
     </router-link>
     <router-link
-      to="/login" class="router-link text-gray-200 m-4"
+      to="/login" class="router-link text-gray-200 m-4 cursor-pointer"
       v-else
       @click="logout"
     >
@@ -60,6 +71,7 @@ h1, h2, h3, h4 {
 
 .router-link {
   font-family: 'Glory', sans-serif;
+  cursor: pointer;
 }
 
 #nav a.router-link-exact-active {

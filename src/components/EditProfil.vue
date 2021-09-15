@@ -120,6 +120,7 @@
             py-2
             mx-2
             text-gray-800
+            cursor-pointer
           "
         >
           Save my changes

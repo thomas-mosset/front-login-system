@@ -272,6 +272,7 @@
               px-3
               py-2
               ml-1
+              cursor-pointer
             "
           >
             Show
@@ -285,6 +286,7 @@
               px-3
               py-2
               ml-1
+              cursor-pointer
             "
           >
             Hide
@@ -313,6 +315,7 @@
           my-4
           mx-auto
           text-gray-200
+          cursor-pointer
         "
       >Sign up</button>
     </form>
