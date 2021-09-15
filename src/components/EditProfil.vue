@@ -24,7 +24,24 @@
           rounded-lg
         "
       >
-        <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6" src="https://images.pexels.com/photos/692071/pexels-photo-692071.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" alt="Image Size 720x400">
+        <img
+          class=
+          "
+            lg:h-60
+            xl:h-56
+            md:h-64
+            sm:h-72
+            xs:h-72
+            h-72
+            rounded
+            w-full
+            object-cover
+            object-center
+            mb-6
+          "
+          :src="user.picture"
+          :alt="user.username"
+        >
         <input
           type="text"
           class=

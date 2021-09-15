@@ -8,6 +8,7 @@ export default createStore({
         email: '',
         username: '',
         password: '',
+        picture: 'https://images.pexels.com/photos/692071/pexels-photo-692071.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       },
       loggedIn: false,
     };
