@@ -1,25 +1,15 @@
-# login-system
+# Sign in / Login system (Front)
 
-## Project setup
-```
-npm install
-```
+This app was built using :
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- Vue.js
+- Tailwind.CSS
+- Vue Router
+- Vuex
 
-### Compiles and minifies for production
-```
-npm run build
-```
+This app allows your to :
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# front-login-system
+- Create a profil
+- Login into your profil
+- Logout from your profil
+- Update your profil informations (username & email address)
